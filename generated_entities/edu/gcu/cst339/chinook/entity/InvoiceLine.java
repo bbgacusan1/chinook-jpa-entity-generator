@@ -2,9 +2,12 @@ package edu.gcu.cst339.chinook.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -18,15 +21,15 @@ class InvoiceLine {
     @Column(name = "invoice_line_id", nullable = false)
     private Integer invoiceLineId;
 
-    // FK -> invoice.invoice_id
     @NotNull
-    @Column(name = "invoice_id", nullable = false)
-    private Integer invoiceId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id", nullable = false)
+    private Invoice invoice;
 
-    // FK -> track.track_id
     @NotNull
-    @Column(name = "track_id", nullable = false)
-    private Integer trackId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "track_id", nullable = false)
+    private Track track;
 
     @NotNull
     @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
@@ -43,20 +46,20 @@ class InvoiceLine {
         return invoiceLineId;
     }
 
-    Integer getInvoiceId() {
-        return invoiceId;
+    Invoice getInvoice() {
+        return invoice;
     }
 
-    void setInvoiceId(Integer invoiceId) {
-        this.invoiceId = invoiceId;
+    void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
-    Integer getTrackId() {
-        return trackId;
+    Track getTrack() {
+        return track;
     }
 
-    void setTrackId(Integer trackId) {
-        this.trackId = trackId;
+    void setTrack(Track track) {
+        this.track = track;
     }
 
     BigDecimal getUnitPrice() {

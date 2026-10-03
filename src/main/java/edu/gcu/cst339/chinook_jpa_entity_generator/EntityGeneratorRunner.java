@@ -38,15 +38,14 @@ class EntityGeneratorRunner implements CommandLineRunner {
                     column.autoIncrement() ? "AUTO" : "",
                     column.isForeignKey() ? "FK -> " + column.foreignKey().referencedTable() + "." + column.foreignKey().referencedColumn() : ""
                 ));
+                }
             }
 
             Path outputDir = Path.of("generated_entities");
-            Path outputPath = outputDir.resolve(EntityGenerator.ENTITY_PACKAGE.replace('.', '/'));
             List<Path> files = entityGenerator.generate(tables, outputDir);
             for (Path file : files) {
                 log.info("Generated {}", file);
             }
-            log.info("Wrote {} entity classes to {}", files.size(), outputDir.toAbsolutePath());
-        }
+        log.info("Wrote {} entity classes to {}", files.size(), outputDir.toAbsolutePath());
     }
 }

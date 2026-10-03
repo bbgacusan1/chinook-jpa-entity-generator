@@ -60,6 +60,15 @@
 			<artifactId>spring-boot-starter-validation-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+                    <groupId>jakarta.persistence</groupId>
+                    <artifactId>jakarta.persistence-api</artifactId>
+            </dependency>
+            <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+                    <scope>test</scope>
+            </dependency>
 	</dependencies>
 
 	<build>
@@ -68,6 +77,24 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-generated-entities</id>
+                    	<phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                        	<sources>
+                                <source>generated_entities</source>
+                            </sources>
+                        </configuration>
+                        </execution>
+                    </executions>
+            </plugin>
 		</plugins>
 	</build>
 

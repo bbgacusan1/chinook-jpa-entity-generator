@@ -2,9 +2,12 @@ package edu.gcu.cst339.chinook.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -65,9 +68,9 @@ class Customer {
     @Column(name = "email", nullable = false, length = 60)
     private String email;
 
-    // FK -> employee.employee_id
-    @Column(name = "support_rep_id")
-    private Integer supportRepId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "support_rep_id")
+    private Employee supportRep;
 
     protected Customer() {
     }
@@ -164,11 +167,11 @@ class Customer {
         this.email = email;
     }
 
-    Integer getSupportRepId() {
-        return supportRepId;
+    Employee getSupportRep() {
+        return supportRep;
     }
 
-    void setSupportRepId(Integer supportRepId) {
-        this.supportRepId = supportRepId;
+    void setSupportRep(Employee supportRep) {
+        this.supportRep = supportRep;
     }
 }

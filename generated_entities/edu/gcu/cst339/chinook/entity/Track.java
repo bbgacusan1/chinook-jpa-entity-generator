@@ -2,9 +2,12 @@ package edu.gcu.cst339.chinook.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,18 +27,18 @@ class Track {
     @Column(name = "name", nullable = false, length = 200)
     private String name;
 
-    // FK -> album.album_id
-    @Column(name = "album_id")
-    private Integer albumId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "album_id")
+    private Album album;
 
-    // FK -> media_type.media_type_id
     @NotNull
-    @Column(name = "media_type_id", nullable = false)
-    private Integer mediaTypeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "media_type_id", nullable = false)
+    private MediaType mediaType;
 
-    // FK -> genre.genre_id
-    @Column(name = "genre_id")
-    private Integer genreId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
 
     @Size(max = 220)
     @Column(name = "composer", length = 220)
@@ -67,28 +70,28 @@ class Track {
         this.name = name;
     }
 
-    Integer getAlbumId() {
-        return albumId;
+    Album getAlbum() {
+        return album;
     }
 
-    void setAlbumId(Integer albumId) {
-        this.albumId = albumId;
+    void setAlbum(Album album) {
+        this.album = album;
     }
 
-    Integer getMediaTypeId() {
-        return mediaTypeId;
+    MediaType getMediaType() {
+        return mediaType;
     }
 
-    void setMediaTypeId(Integer mediaTypeId) {
-        this.mediaTypeId = mediaTypeId;
+    void setMediaType(MediaType mediaType) {
+        this.mediaType = mediaType;
     }
 
-    Integer getGenreId() {
-        return genreId;
+    Genre getGenre() {
+        return genre;
     }
 
-    void setGenreId(Integer genreId) {
-        this.genreId = genreId;
+    void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     String getComposer() {

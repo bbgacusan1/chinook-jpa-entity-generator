@@ -2,9 +2,12 @@ package edu.gcu.cst339.chinook.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -33,9 +36,9 @@ class Employee {
     @Column(name = "title", length = 30)
     private String title;
 
-    // FK -> employee.employee_id
-    @Column(name = "reports_to")
-    private Integer reportsTo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reports_to")
+    private Employee reportsTo;
 
     @Column(name = "birth_date")
     private LocalDateTime birthDate;
@@ -106,11 +109,11 @@ class Employee {
         this.title = title;
     }
 
-    Integer getReportsTo() {
+    Employee getReportsTo() {
         return reportsTo;
     }
 
-    void setReportsTo(Integer reportsTo) {
+    void setReportsTo(Employee reportsTo) {
         this.reportsTo = reportsTo;
     }
 
