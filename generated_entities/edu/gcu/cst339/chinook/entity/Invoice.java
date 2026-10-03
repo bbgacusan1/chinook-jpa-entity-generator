@@ -2,9 +2,12 @@ package edu.gcu.cst339.chinook.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,10 +23,10 @@ class Invoice {
     @Column(name = "invoice_id", nullable = false)
     private Integer invoiceId;
 
-    // FK -> customer.customer_id
     @NotNull
-    @Column(name = "customer_id", nullable = false)
-    private Integer customerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
     @NotNull
     @Column(name = "invoice_date", nullable = false)
@@ -60,12 +63,12 @@ class Invoice {
         return invoiceId;
     }
 
-    Integer getCustomerId() {
-        return customerId;
+    Customer getCustomer() {
+        return customer;
     }
 
-    void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     LocalDateTime getInvoiceDate() {
